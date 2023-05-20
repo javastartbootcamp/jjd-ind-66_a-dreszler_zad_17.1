@@ -95,9 +95,7 @@ class PaymentService {
     Znajdź i zwróć nazwy produktów sprzedanych w aktualnym miesiącu
      */
     Set<String> findProductsSoldInCurrentMonth() {
-        return findPaymentsForCurrentMonth().stream()
-                .map(Payment::getPaymentItems)
-                .flatMap(List::stream)
+        return getPaymentItemStreamForGivenMonth(dateTimeProvider.yearMonthNow())
                 .map(PaymentItem::getName)
                 .collect(Collectors.toSet());
     }
