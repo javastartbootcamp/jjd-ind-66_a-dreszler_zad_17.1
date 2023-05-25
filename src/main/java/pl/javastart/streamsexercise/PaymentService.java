@@ -60,8 +60,12 @@ class PaymentService {
     List<Payment> findPaymentsForGivenMonth(YearMonth yearMonth) {
         return paymentRepository.findAll()
                 .stream()
-                .filter(p -> yearMonth.getMonth() == p.getPaymentDate().getMonth())
+                .filter(p -> checkIfYearAndMonthMatches(p, yearMonth))
                 .collect(Collectors.toList());
+    }
+
+    private boolean checkIfYearAndMonthMatches(Payment p, YearMonth yearMonth) {
+        return yearMonth.getMonth() == p.getPaymentDate().getMonth() && yearMonth.getYear() == p.getPaymentDate().getYear();
     }
 
     /*
